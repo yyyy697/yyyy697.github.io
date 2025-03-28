@@ -1,46 +1,52 @@
-// 弹出对话框
-alert("即将改变背景色并显示当前时间！");
+<html lang="en">
 
-// 改变屏幕背景色（随机颜色）
-document.body.style.backgroundColor = getRandomColor();
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时时间显示</title>
+    <style>
+        body {
+            background-color: white;
+            text-align: center;
+            padding-top: 50px;
+        }
 
-// 显示当前时间
-function showCurrentTime() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString();
-    const dateString = now.toLocaleDateString();
-    
-    // 创建一个显示时间的div元素
-    const timeDisplay = document.createElement('div');
-    timeDisplay.id = 'timeDisplay';
-    timeDisplay.style.position = 'fixed';
-    timeDisplay.style.top = '20px';
-    timeDisplay.style.right = '20px';
-    timeDisplay.style.backgroundColor = 'white';
-    timeDisplay.style.padding = '10px';
-    timeDisplay.style.border = '1px solid black';
-    timeDisplay.style.borderRadius = '5px';
-    timeDisplay.style.zIndex = '1000';
-    timeDisplay.textContent = `当前日期: ${dateString}\n当前时间: ${timeString}`;
-    
-    document.body.appendChild(timeDisplay);
-    
-    // 每秒更新时间
-    setInterval(() => {
-        const now = new Date();
-        timeDisplay.textContent = `当前日期: ${now.toLocaleDateString()}\n当前时间: ${now.toLocaleTimeString()}`;
-    }, 1000);
-}
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
 
-// 生成随机颜色
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+<body>
+    <div id="time"></div>
+    <button onclick="showDialog()">显示对话框</button>
+    <button onclick="changeBackgroundColor()">改变背景色</button>
 
-// 调用显示时间的函数
-showCurrentTime();
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+            document.getElementById('time').textContent = timeString;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function showDialog() {
+            alert('乐');
+        }
+
+        function changeBackgroundColor() {
+            const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+            document.body.style.backgroundColor = randomColor;
+        }
+    </script>
+</body>
+
+</html>
